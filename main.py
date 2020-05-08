@@ -131,7 +131,7 @@ smtp_server = "smtp.gmail.com"
 
 timestamp = str(dt.now())[:16]
 
-subject = "Two Rooms Test: " + timestamp
+subject = "2R1B: " + timestamp
 
 ###################### USER EDITED ##############################
 
