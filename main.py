@@ -134,7 +134,7 @@ subject = "Two Rooms Test: " + timestamp
 
 ###################### USER EDITED ##############################
 
-sender_email = "tworoomskoinberk@gmail.com"  # TODO: Enter your address
+sender_email = "sppitcaptain@gmail.com"  # TODO: Enter your address
 
 #################################################################
 
@@ -171,9 +171,9 @@ with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
     	# Write Custom Body w/ Name, Team, Role, Url to Images
 
     	greetings = "Hi " + str(person[0]) + ",\n\n"
-    	info1 = "You are on the " + player_card.getTeam() + " team.\n\n"
-    	info2 = "Your role is: " + player_card.getRole() + "\n\n"
-    	info3 = "To view your card, you can also go here: \n"
+    	info1 = player_card.getTeam() + " team.\n\n"
+    	info2 = "Role: " + player_card.getRole() + "\n\n"
+    	info3 = "View card here: \n"
     	link = "https://tinyurl.com/2r-cards/" + str(player_card.getImage())
     	body = greetings + info1 + info2 + info3 + link
 
