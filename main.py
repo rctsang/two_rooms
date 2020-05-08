@@ -87,9 +87,9 @@ shuffled_deck = rand.sample(deck, len(deck))
 
 directory = dict(zip(addresses, shuffled_deck))
 
-# debugging
-for k in directory.keys():
-	print(k, directory[k].getImage())
+# # debugging
+# for k in directory.keys():
+# 	print(k, directory[k].getImage())
 
 
 
@@ -106,13 +106,18 @@ timestamp = str(dt.now())[:16]
 
 subject = "Two Rooms Test: " + timestamp
 
-sender_email = "tworoomskoinberk@gmail.com"  # Enter your address
+###################### USER EDITED ##############################
+
+sender_email = "tworoomskoinberk@gmail.com"  # TODO: Enter your address
+
+#################################################################
+
+if input("Deck has been shuffled and dealt.\nReady to send? (y/n) ") == "n":
+	exit()
+
 password = input("Type your password and press enter: ")
 
 filepath = ""
-
-if input("Ready to send? (y/n) ") == "n":
-	exit()
 
 context = ssl.create_default_context()
 with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
@@ -131,8 +136,8 @@ with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
     	# get image filename
     	filepath = player_card.getImage()
 
-    	# debugging
-    	print(message["To"], filepath)
+    	# # debugging
+    	# print(message["To"], filepath)
 
     	with open(filepath, 'rb') as img:
     		img_data = img.read()
@@ -144,12 +149,16 @@ with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
     	info2 = "Your role is: " + player_card.getRole()
     	body = greetings + info1 + info2
 
-    	text = MIMEText(body) # TODO: Customize this
+    	# adding body and image attachment to email
+
+    	text = MIMEText(body)
     	message.attach(text)
 
     	image = MIMEImage(img_data, name=os.path.basename(filepath))
     	message.attach(image)
 
+    	# Sending email
+    	print("Sending email to:", message["To"], "...")
     	server.sendmail(message["From"], message["To"], message.as_string())
 
 
