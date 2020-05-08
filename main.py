@@ -114,8 +114,8 @@ shuffled_deck = rand.sample(deck, len(deck))
 directory = dict(zip(addresses, shuffled_deck))   # directory contains dictonary w/ key=email, value=Card object
 
 # debugging
-for k in directory.keys():
-	print(k, directory[k].getImage(), directory[k].getRole())
+# for k in directory.keys():
+# 	print(k, directory[k].getImage(), directory[k].getRole())
 
 
 
@@ -168,12 +168,14 @@ with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
     	with open(filepath, 'rb') as img:
     		img_data = img.read()
 
-    	# Write Custom Body w/ Name, Team, Role
+    	# Write Custom Body w/ Name, Team, Role, Url to Images
 
     	greetings = "Hi " + str(person[0]) + ",\n\n"
     	info1 = "You are on the " + player_card.getTeam() + " team.\n\n"
-    	info2 = "Your role is: " + player_card.getRole()
-    	body = greetings + info1 + info2
+    	info2 = "Your role is: " + player_card.getRole() + "\n\n"
+    	info3 = "To view your card, you can also go here: \n"
+    	link = "https://tinyurl.com/2r-cards/" + str(player_card.getImage())
+    	body = greetings + info1 + info2 + info3 + link
 
     	# adding body and image attachment to email
 
