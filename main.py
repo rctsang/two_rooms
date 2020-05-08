@@ -51,14 +51,23 @@ class Card:
 	def getTeam(self):
 		return self.team
 
+	
 	# Function to get the Card role
-	# Note: Only use this for the purposes of printing the role
+	# Note: Will need to adjust HERE if adding additional roles
 
 	# Params:		None
 	# Out:		(String)	Player Role
 	def getRole(self):
 		if not self.role:
 			return "Player"
+		if self.role == "MayorBlue":
+			return "Blue Mayor"
+		if self.role == "MayorRed":
+			return "Red Mayor"
+		if self.role == "SpyBlue":
+			return "Blue Spy"
+		if self.role == "SpyRed":
+			return "Red Spy"
 		return self.role
 
 
@@ -73,7 +82,24 @@ if (num_players < 4):
 
 deck = [Card("Blue", "President"), Card("Red", "Bomber")]
 
-for n in range(0, (num_players - 2) // 2):
+special = 2
+
+if input("Play with the Doctor/Engineer? (y/n) ") == "y":
+	deck += [Card("Blue", "Doctor")]
+	deck += [Card("Red", "Engineer")]
+	special += 2
+
+if input("Play with the Mayors? (y/n) ") == "y":
+	deck += [Card("Blue", "MayorBlue")]
+	deck += [Card("Red", "MayorRed")]
+	special += 2
+
+if input("Play with the Spies? (y/n) ") == "y":
+	deck += [Card("Blue", "SpyBlue")]
+	deck += [Card("Red", "SpyRed")]
+	special += 2
+
+for n in range(0, (num_players - special) // 2):
 	deck += [Card("Red")]
 	deck += [Card("Blue")]
 
@@ -85,11 +111,11 @@ rand.seed()
 
 shuffled_deck = rand.sample(deck, len(deck))
 
-directory = dict(zip(addresses, shuffled_deck))
+directory = dict(zip(addresses, shuffled_deck))   # directory contains dictonary w/ key=email, value=Card object
 
-# # debugging
-# for k in directory.keys():
-# 	print(k, directory[k].getImage())
+# debugging
+for k in directory.keys():
+	print(k, directory[k].getImage(), directory[k].getRole())
 
 
 
