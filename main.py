@@ -8,6 +8,7 @@ from email.mime.image import MIMEImage
 
 import random as rand
 from datetime import datetime as dt
+from getpass import getpass
 
 #################################
 ########### Get Emails ##########
@@ -141,7 +142,8 @@ sender_email = "sppitcaptain@gmail.com"  # TODO: Enter your address
 if input("Deck has been shuffled and dealt.\nReady to send? (y/n) ") == "n":
 	exit()
 
-password = input("Type your password and press enter: ")
+print("Type your password and press enter: ")
+password = getpass()
 
 filepath = ""
 
