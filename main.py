@@ -81,6 +81,8 @@ if (num_players < 4):
 	print("Error: Not Enough Players!")
 	exit()
 
+room_num = ['1' for i in range(num_players//2)] + ['2' for i in range(num_players//2)]
+
 deck = [Card("Blue", "President"), Card("Red", "Bomber")]
 
 special = 2
@@ -106,6 +108,7 @@ for n in range(0, (num_players - special) // 2):
 
 if (num_players % 2):
 	deck += [Card("Grey", "Gambler")]
+	room_num.append("1")
 
 
 rand.seed()
@@ -151,7 +154,7 @@ context = ssl.create_default_context()
 with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
     server.login(sender_email, password)
 
-    for person in data:
+    for rn,person in enumerate(data):
 
     	# Create Multipart Section and Header
     	message = MIMEMultipart()
@@ -172,10 +175,10 @@ with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
 
     	# Write Custom Body w/ Name, Team, Role, Url to Images
 
-    	greetings = "Hi " + str(person[0]) + ",\n\n"
     	info1 = player_card.getTeam() + " team.\n\n"
     	info2 = "Role: " + player_card.getRole() + "\n\n"
-    	info3 = "View card here: \n"
+    	info3 = "Room: " + room_num[rn]
+    	info4 = "View card here: \n"
     	link = "https://tinyurl.com/2r-cards/" + str(player_card.getImage())
     	body = greetings + info1 + info2 + info3 + link
 
