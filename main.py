@@ -154,13 +154,14 @@ print("Type your password and press enter: ")
 password = getpass()
 
 filepath = ""
-body = "\n{n},\nTeam: {t}\nRoom: {m}\nRole: {r}\nImg: {l}"
 
 context = ssl.create_default_context()
 with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
     server.login(sender_email, password)
 
-    for rn,person in enumerate(data):
+    for rn, person in enumerate(data):
+
+    	body = "Team: {t}\nRoom: {m}\nRole: {r}\nImg: {l}"
 
     	# Create Multipart Section and Header
     	message = MIMEMultipart()
@@ -181,18 +182,10 @@ with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
 
     	# Write Custom Body w/ Name, Team, Role, Url to Images
 
-    	body = body.format(n=person[0], 
-    						t=player_card.getTeam(), 
-    						m=room_num[rn]
+    	body = body.format(t=player_card.getTeam(), 
+    						m=room_num[rn],
     						r=player_card.getRole(),
     						l="https://tinyurl.com/2r-cards/" + player_card.getImage(for_link=True))
-    	
-    	# info1 = "\n" + player_card.getTeam() + " team.\n\n"
-    	# info2 = "Role: " + player_card.getRole() + "\n\n"
-    	# info3 = "Room: " + room_num[rn] + "\n\n"
-    	# info4 = "View card here: \n"
-    	# link = "https://tinyurl.com/2r-cards/" + str(player_card.getImage())
-    	# body = info1 + info2 + info3 + info4 + link
 
     	# adding body and image attachment to email
 
@@ -204,6 +197,7 @@ with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
 
     	# Sending email
     	print("Sending email to:", message["To"], "...")
+    	# print(body)
     	server.sendmail(message["From"], message["To"], message.as_string())
 
 
