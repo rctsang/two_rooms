@@ -40,7 +40,12 @@ class Card:
 	
 	# Params: 	None
 	# Out:		(String)	Image filename
-	def getImage(self):
+	def getImage(self, for_link=False):
+		if for_link:
+			if not self.role:
+				return self.team + ".jpg"
+			return self.role + ".jpg"
+
 		if not self.role:
 			return self.img_dir + self.team + ".jpg"
 		return self.img_dir + self.role + ".jpg"
@@ -77,7 +82,7 @@ class Card:
 ####### Construct/Shuffle Deck #########
 ########################################
 
-if (num_players < 4):
+if (num_players < 2):
 	print("Error: Not Enough Players!")
 	exit()
 
@@ -87,17 +92,17 @@ deck = [Card("Blue", "President"), Card("Red", "Bomber")]
 
 special = 2
 
-if input("Play with the Doctor/Engineer? (y/n) ") == "y":
+if (special+2 < num_players) and (input("Play with the Doctor/Engineer? (y/n) ") == "y"):
 	deck += [Card("Blue", "Doctor")]
 	deck += [Card("Red", "Engineer")]
 	special += 2
 
-if input("Play with the Mayors? (y/n) ") == "y":
+if (special+2 < num_players) and (input("Play with the Mayors? (y/n) ") == "y"):
 	deck += [Card("Blue", "MayorBlue")]
 	deck += [Card("Red", "MayorRed")]
 	special += 2
 
-if input("Play with the Spies? (y/n) ") == "y":
+if (special+2 < num_players) and (input("Play with the Spies? (y/n) ") == "y"):
 	deck += [Card("Blue", "SpyBlue")]
 	deck += [Card("Red", "SpyRed")]
 	special += 2
@@ -138,7 +143,7 @@ subject = "2R1B: " + timestamp
 
 ###################### USER EDITED ##############################
 
-sender_email = "sppitcaptain@gmail.com"  # TODO: Enter your address
+sender_email = "koinberk2rooms@gmail.com"  # TODO: Enter your address
 
 #################################################################
 
@@ -149,6 +154,7 @@ print("Type your password and press enter: ")
 password = getpass()
 
 filepath = ""
+body = "\n{n},\nTeam: {t}\nRoom: {m}\nRole: {r}\nImg: {l}"
 
 context = ssl.create_default_context()
 with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
@@ -175,12 +181,18 @@ with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
 
     	# Write Custom Body w/ Name, Team, Role, Url to Images
 
-    	info1 = "\n" + player_card.getTeam() + " team.\n\n"
-    	info2 = "Role: " + player_card.getRole() + "\n\n"
-    	info3 = "Room: " + room_num[rn] + "\n\n"
-    	info4 = "View card here: \n"
-    	link = "https://tinyurl.com/2r-cards/" + str(player_card.getImage())
-    	body = info1 + info2 + info3 + info4 + link
+    	body = body.format(n=person[0], 
+    						t=player_card.getTeam(), 
+    						m=room_num[rn]
+    						r=player_card.getRole(),
+    						l="https://tinyurl.com/2r-cards/" + player_card.getImage(for_link=True))
+    	
+    	# info1 = "\n" + player_card.getTeam() + " team.\n\n"
+    	# info2 = "Role: " + player_card.getRole() + "\n\n"
+    	# info3 = "Room: " + room_num[rn] + "\n\n"
+    	# info4 = "View card here: \n"
+    	# link = "https://tinyurl.com/2r-cards/" + str(player_card.getImage())
+    	# body = info1 + info2 + info3 + info4 + link
 
     	# adding body and image attachment to email
 
