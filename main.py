@@ -175,12 +175,12 @@ with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
 
     	# Write Custom Body w/ Name, Team, Role, Url to Images
 
-    	info1 = player_card.getTeam() + " team.\n\n"
+    	info1 = "\n" + player_card.getTeam() + " team.\n\n"
     	info2 = "Role: " + player_card.getRole() + "\n\n"
     	info3 = "Room: " + room_num[rn] + "\n\n"
     	info4 = "View card here: \n"
     	link = "https://tinyurl.com/2r-cards/" + str(player_card.getImage())
-    	body = greetings + info1 + info2 + info3 + link
+    	body = info1 + info2 + info3 + info4 + link
 
     	# adding body and image attachment to email
 
