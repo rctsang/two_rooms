@@ -15,7 +15,12 @@ When you run the `main.py` application, the program will go through the `contact
 * `two_rooms` repo downloaded
 
 ### Instructions:
-1. Edit the `contact.csv` file to include each in the format `<name>,<email>`
+1. Create a file named `contact.csv` and include each in the format:
+```
+  <name1>,<email1>
+  <name2>,<email2>
+  ...
+```
   (We recommend a Google Form for to get contact info)
 1. Edit `main.py`: Look for the variable `sender_email` and set it to the gmail address you widh to send emails from
 1. Make sure that [allow less secure apps](https://myaccount.google.com/lesssecureapps) is ON
