@@ -1,0 +1,18 @@
+{% extends 'layouts/main.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <h1>Welcome to Two Zooms and a Boom!</h1>
+</div>
+<!--<p class="lead">Pin a fixed-height footer to the bottom of the viewport in desktop browsers with this custom HTML and CSS. A fixed navbar has been added within <code>#wrap</code> with <code>padding-top: 60px;</code> on the <code>.container</code>.</p> -->
+  <form method="post" class="form">
+    <h3 class="form-heading">Join a Game </h3>
+    {{ form.name(class_ = 'form-control first-input', placeholder = form.name.label.text, autofocus = true) }}
+    {{ form.gameroom(class_ = 'form-control', placeholder = form.gameroom.label.text) }}
+
+    <input type="submit" name="join" value="Join a Game" class="btn btn-primary btn-lg btn-block" />
+    <input type="submit" name="start" value="Start a Game" class="btn btn-primary btn-lg btn-block" />
+  </form>
+
+{% endblock %}
